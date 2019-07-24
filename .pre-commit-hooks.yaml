@@ -1,0 +1,5 @@
+-   id: rg-hook
+    name: Realglobe's shared hooks
+    language: script
+    entry: ./run
+    verbose: true
