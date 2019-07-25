@@ -1,5 +1,6 @@
 # pre-commit-python
 This repository is for Realglobe's shared pre-commit hooks.
+**Hooks require Python3.3 or later.**
 
 ## getting started
 Run `pip install pre-commit` to install `pre-commit`. You can use `pipenv` as well.
@@ -14,4 +15,4 @@ repos:
       -   id: rg-hook
 ```
 
-Run `pre-commit install --install-hooks` to install new pre-commit hook to `./git/hooks/`. If you use `pipenv`, run `pipenv run pre-commit install --install-hooks` instead. 
+Run `pre-commit install --install-hooks` to install new pre-commit hook to `./git/hooks/`. If you use `pipenv`, run `pipenv run pre-commit install --install-hooks` instead.
