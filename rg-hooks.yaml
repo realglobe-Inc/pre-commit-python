@@ -7,23 +7,27 @@ repos:
     -   id: check-yaml
     -   id: check-added-large-files
 
+# formatting
 -   repo: https://github.com/m-shaka/mirrors-pyformat.git
     rev: 0026ee37b9d40f6394a91d4e2a2691e1709a7e9f
     hooks:
     -   id: pyformat
         args: [--in-place, -aaa]
 
+# generate isort's known_third_party option with statical analysis.
 -   repo: https://github.com/asottile/seed-isort-config
     rev: v1.9.2
     hooks:
     -   id: seed-isort-config
 
+# sort import order
 -   repo: https://github.com/pre-commit/mirrors-isort
     rev: v4.3.21
     hooks:
     -   id: isort
         args: [--force-sort-within-sections]
 
+# check codes against pep8
 -   repo: https://gitlab.com/pycqa/flake8.git
     rev: 3.7.7
     hooks:
