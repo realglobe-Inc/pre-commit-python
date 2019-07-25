@@ -1,13 +1,42 @@
 #!/usr/bin/env python
 import os
+import shutil
 import sys
+import subprocess
 
 HERE = os.path.dirname(os.path.realpath(__file__))
 
 
+def _is_pipenv_project():
+    cmd = ('git', 'rev-parse', '--show-toplevel')
+    toplevel = subprocess.check_output(cmd).decode('UTF-8').strip()
+    pipfile_path = os.path.join(toplevel, 'Pipfile')
+    return os.path.exists(pipfile_path)
+
+
+def _get_pre_commit_path():
+    if not _is_pipenv_project():
+        raise RuntimeError(
+            'pre-commit is not installed and'
+            'current project is not Pipenv project. ')
+    cmd = ('pipenv', '--venv')
+    try:
+        venv_path = subprocess.check_output(cmd).decode('UTF-8').strip()
+        return os.path.join(venv_path, 'bin', 'pre-commit')
+    except FileNotFoundError:
+        raise RuntimeError(
+            'rg-hook try to use pre-commit in pipenv environment, '
+            'but pipenv is not installed. ')
+    except Exception as e:
+        raise e
+
+
 def main():
+    pre_commit = shutil.which('pre-commit')
+    pre_commit = pre_commit or _get_pre_commit_path()
     cfg = os.path.join(HERE, 'rg-hooks.yaml')
-    cmd = ['pre-commit', 'run', '--config', cfg, '--files'] + sys.argv[1:]
+
+    cmd = [pre_commit, 'run', '--config', cfg, '--files'] + sys.argv[1:]
     os.execvp(cmd[0], cmd)
 
 
